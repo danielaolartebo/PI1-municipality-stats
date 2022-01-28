@@ -7,6 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <StackPanel>
+            <DockPanel>
+                <Menu DockPanel.Dock="Top">
+                    <MenuItem Header="_Data">
+                        <MenuItem x:Name="Import" Header="_Import" HorizontalAlignment="Left" Width="120" Click="Import_Click"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+        </StackPanel>
+        <ListView Margin="10,86,340,10" Name="lvUsers" Width="430" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="COD Dpto" Width="60" DisplayMemberBinding="{Binding CodDpto}" />
+                    <GridViewColumn Header="COD Mcpio" Width="70" DisplayMemberBinding="{Binding CodMcpio}" />
+                    <GridViewColumn Header="Departamento" Width="100" DisplayMemberBinding="{Binding NameDpto}" />
+                    <GridViewColumn Header="Municipio" Width="90" DisplayMemberBinding="{Binding NameMcpio}" />
+                    <GridViewColumn Header="Tipo" Width="90" DisplayMemberBinding="{Binding Type}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
