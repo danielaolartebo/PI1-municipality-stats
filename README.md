@@ -11,4 +11,4 @@ This program generates a series of basic reports on the municipalities of Colomb
 * David Montaño Tamayo
 
 ## Documentation: 
-All documentation of this app can be found [here](https://github.com/danielaolartebo/AED-TI3-ICESI-routes/tree/main/docs).
+All documentation of this app can be found [here](https://github.com/danielaolartebo/PI1-municipality-stats/tree/master/docs).
