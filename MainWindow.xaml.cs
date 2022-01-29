@@ -25,8 +25,14 @@ namespace stats_s1
         {
             var fileDialog = new Microsoft.Win32.OpenFileDialog() { Filter = "CSV Files (*.csv)|*.csv", Title = "Open File" };
             var result = fileDialog.ShowDialog();
-            if (result == false) return;
-            lvUsers.ItemsSource = ReadCSV(fileDialog.FileName);
+            if (result == false)
+            {
+                MessageBox.Show("Failed to Load Data!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Error);
+            } else
+            {
+                lvUsers.ItemsSource = ReadCSV(fileDialog.FileName);
+                MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private IEnumerable<Users> ReadCSV(string fileName)
