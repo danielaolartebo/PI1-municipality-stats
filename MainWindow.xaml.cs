@@ -80,10 +80,10 @@ namespace stats_s1
             {
                 series.Add(new PieSeries()
                 {
-                    Title = users.GetType().Name,
+                    Title = users.Type,
                     Values = new ChartValues<int> { users.getTypes().Count },
                     DataLabels = true,
-                    });
+                });
             }
             pieChart.Series = series;
         }
@@ -98,6 +98,7 @@ namespace stats_s1
         public int CodMcpio { get; }
         public string NameDpto { get; }
         public string NameMcpio { get; }
+        public string Type { get; }
         public List<Users> types;
 
         // Methods
@@ -107,6 +108,7 @@ namespace stats_s1
             CodMcpio = codMcpio;
             NameDpto = nameDpto;
             NameMcpio = nameMcpio;
+            Type = type;
             types = new List<Users>();
         }
 
@@ -114,6 +116,7 @@ namespace stats_s1
         {
             return types;
         }
+        
     }
 }
 
