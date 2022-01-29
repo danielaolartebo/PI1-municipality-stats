@@ -14,12 +14,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace stats_s1
 {
     public partial class MainWindow : Window
     {
         public MainWindow() => InitializeComponent();
+        private Users users;
+
+        // Import CSV file
 
         private void Import_Click(object sender, RoutedEventArgs e)
         {
@@ -33,7 +39,10 @@ namespace stats_s1
                 lvUsers.ItemsSource = ReadCSV(fileDialog.FileName);
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            // generatePieChart();
         }
+
+        // Read CSV file 
 
         private IEnumerable<Users> ReadCSV(string fileName)
         {
@@ -49,15 +58,47 @@ namespace stats_s1
         {
 
         }
+
+        private void lvUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        // Create pie chart
+        /*
+        private void generatePieChart()
+        {
+            SeriesCollection series = new SeriesCollection();
+            foreach (Users types in users.getNameDpto())
+            {
+                series.Add(new PieSeries()
+                {
+                    Title = users.getType(),
+                    Values = new ChartValues<int> { users.getCodDpto().Count },
+                    DataLabels = true,
+                });
+           
+            }
+         
+        }
+        */
+
     }
+
+
 
     public class Users
     {
-        public int CodDpto { get; }
-        public int CodMcpio { get; }
-        public string NameDpto { get; }
-        public string NameMcpio { get; }
-        public string Type { get; }
+
+        // Attributes
+
+        public int CodDpto;
+        public int CodMcpio;
+        public string NameDpto;
+        public string NameMcpio;
+        public string Type;
+
+        // Methods
 
         public Users(int codDpto, int codMcpio, string nameDpto, string nameMcpio, string type)
         {
@@ -67,5 +108,33 @@ namespace stats_s1
             NameMcpio = nameMcpio;
             Type = type;
         }
+
+        // Getters and setters
+
+        public int getCodDpto()
+        {
+            return CodDpto;
+        }
+
+        public int getCodMcpio()
+        {
+            return CodMcpio;
+        }
+
+        public string getNameDpto()
+        {
+            return NameDpto;
+        }
+
+        public string getNameMcpio()
+        {
+            return NameMcpio;
+        }
+
+        public string getType()
+        {
+            return Type;
+        }
     }
 }
+
