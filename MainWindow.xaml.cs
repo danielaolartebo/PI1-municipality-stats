@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Wpf;
+using LiveCharts.Wpf.Charts;
 
 namespace stats_s1
 {
@@ -33,7 +34,7 @@ namespace stats_s1
                 TBCodFinal.IsEnabled = true;
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            // generatePieChart();
+            generatePieChart();
         }
 
         // Read CSV file 
@@ -49,12 +50,14 @@ namespace stats_s1
             lvUsers.ItemsSource = Users;
         }
 
+        //Validatiton
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        // Selection of 2 municipalities 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ObservableCollection<Users> tempUsers = new ObservableCollection<Users>();
@@ -70,24 +73,23 @@ namespace stats_s1
         }
 
         // Create pie chart
-        /*
         private void generatePieChart()
         {
             SeriesCollection series = new SeriesCollection();
-            foreach (Users types in users.getNameDpto())
+            foreach (Users users in Users)
             {
                 series.Add(new PieSeries()
                 {
-                    Title = users.getType(),
-                    Values = new ChartValues<int> { users.getCodDpto().Count },
+                    Title = users.GetType().Name,
+                    Values = new ChartValues<int> { users.getTypes().Count },
                     DataLabels = true,
-                });
-           
+                    });
             }
-         
+            pieChart.Series = series;
         }
-        */
     }
+
+    //User class
     public class Users
     {
 
@@ -96,7 +98,7 @@ namespace stats_s1
         public int CodMcpio { get; }
         public string NameDpto { get; }
         public string NameMcpio { get; }
-        public string Type { get; }
+        public List<Users> types;
 
         // Methods
         public Users(int codDpto, int codMcpio, string nameDpto, string nameMcpio, string type)
@@ -105,8 +107,14 @@ namespace stats_s1
             CodMcpio = codMcpio;
             NameDpto = nameDpto;
             NameMcpio = nameMcpio;
-            Type = type;
+            types = new List<Users>();
+        }
+
+        public List<Users> getTypes()
+        {
+            return types;
         }
     }
 }
+
 

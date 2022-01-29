@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:stats_s1"
+        xmlns:local="clr-namespace:stats_s1" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="Municipality Stats" Height="450" Width="1130" Background="White">
     <Grid>
@@ -42,5 +42,6 @@
         <Label Content="al" Margin="10,40,539,94" RenderTransformOrigin="0.588,0.386" Grid.Column="2"/>
         <TextBox Name="TBCodInitial" HorizontalAlignment="Left" Margin="125,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
         <TextBox Name="TBCodFinal" HorizontalAlignment="Left" Margin="56,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Grid.Column="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
+        <lvc:PieChart x:Name="pieChart" LegendLocation="Bottom" Hoverable="True" InnerRadius="0" Margin="10" Grid.Column="2"></lvc:PieChart>
     </Grid>
 </Window>
