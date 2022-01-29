@@ -27,7 +27,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox HorizontalAlignment="Left" Margin="330,44,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="COD Mcpio Inicial:" Margin="20,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
+        <TextBox Name="TBCodInitial" TextWrapping="Wrap" Text="" Width="80" Margin="132,44,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
+        <Label Content="COD Mcpio Final:" Margin="259,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
+        <TextBox Name="TBCodFinal" TextWrapping="Wrap" Text="" Width="80" Margin="365,44,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
     </Grid>
 </Window>
-
