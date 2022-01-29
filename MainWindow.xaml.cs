@@ -16,9 +16,15 @@ namespace stats_s1
 {
     public partial class MainWindow : Window
     {
-        public MainWindow() => InitializeComponent();
-        ObservableCollection<Users> Users = new ObservableCollection<Users>();
-
+        private SeriesCollection series;
+        private ObservableCollection<Users> Users;
+        private List<Municipality> Mun;
+        public MainWindow()
+        {
+            InitializeComponent();
+            Users = new ObservableCollection<Users>();
+            Mun = new List<Municipality>();
+        }
         // Import CSV file
         private void Import_Click(object sender, RoutedEventArgs e)
         {
@@ -32,9 +38,9 @@ namespace stats_s1
                 ReadCSV(fileDialog.FileName);
                 TBCodInitial.IsEnabled = true;
                 TBCodFinal.IsEnabled = true;
+                generatePieChart(Mun);
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            generatePieChart();
         }
 
         // Read CSV file 
@@ -44,10 +50,24 @@ namespace stats_s1
             IEnumerable<Users> IUsers = lines.Select(line =>
             {
                 string[] data = line.Split(',');
+                AddType(Mun, data[4]);
                 return new Users(Convert.ToInt32(data[0]), Convert.ToInt32(data[1]), data[2], data[3], data[4]);
             });
             Users = new ObservableCollection<Users>(IUsers);
             lvUsers.ItemsSource = Users;
+        }
+
+        private void AddType(List<Municipality> mun, string type)
+        {
+            for (int i = 0; i < mun.Count; i++)
+            {
+                if (mun[i].Type == type)
+                {
+                    mun[i].Count++;
+                    return;
+                }
+            }
+            mun.Add(new Municipality(type));
         }
 
         //Validatiton
@@ -61,27 +81,33 @@ namespace stats_s1
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ObservableCollection<Users> tempUsers = new ObservableCollection<Users>();
+            List<Municipality> tempMun = new List<Municipality>();
             int start = (TBCodInitial.Text.Length > 0) ? Convert.ToInt32(TBCodInitial.Text) : 0;
             int final = (TBCodFinal.Text.Length > 0) ? Convert.ToInt32(TBCodFinal.Text) : int.MaxValue;
             foreach (Users users in Users)
             {
                 if (users.CodMcpio >= start && users.CodMcpio <= final)
+                {
                     tempUsers.Add(users);
+                    AddType(tempMun, users.Type);
+                }
             }
             lvUsers.ClearValue(ItemsControl.ItemsSourceProperty);
             lvUsers.ItemsSource = tempUsers;
+            pieChart.Series.Clear();
+            generatePieChart(tempMun);
         }
 
         // Create pie chart
-        private void generatePieChart()
+        private void generatePieChart(List<Municipality> municipalities)
         {
-            SeriesCollection series = new SeriesCollection();
-            foreach (Users users in Users)
+            series = new SeriesCollection();
+            foreach (Municipality mun in municipalities)
             {
                 series.Add(new PieSeries()
                 {
-                    Title = users.GetType().Name,
-                    Values = new ChartValues<int> { users.getTypes().Count },
+                    Title = mun.Type,
+                    Values = new ChartValues<int> { mun.Count },
                     DataLabels = true,
                     });
             }
@@ -98,7 +124,7 @@ namespace stats_s1
         public int CodMcpio { get; }
         public string NameDpto { get; }
         public string NameMcpio { get; }
-        public List<Users> types;
+        public string Type { get; }
 
         // Methods
         public Users(int codDpto, int codMcpio, string nameDpto, string nameMcpio, string type)
@@ -107,12 +133,19 @@ namespace stats_s1
             CodMcpio = codMcpio;
             NameDpto = nameDpto;
             NameMcpio = nameMcpio;
-            types = new List<Users>();
+            Type = type;
         }
+    }
 
-        public List<Users> getTypes()
+    public class Municipality
+    {
+        public string Type { get; }
+        public int Count { get; set; }
+
+        public Municipality(string type)
         {
-            return types;
+            Type = type;
+            Count = 1;
         }
     }
 }

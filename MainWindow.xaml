@@ -26,7 +26,7 @@
                 </Menu>
             </DockPanel>
         </StackPanel>
-        <ListView Margin="20,86,333,10" Name="lvUsers" Background="#FFC34444" Grid.ColumnSpan="3" FontWeight="Bold" Grid.RowSpan="2">
+        <ListView Margin="20,86,287,10" x:Name="lvUsers" Background="#FFC34444" Grid.ColumnSpan="3" FontWeight="Bold" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Código Departamento" Width="130" DisplayMemberBinding="{Binding CodDpto}" />
@@ -38,10 +38,11 @@
             </ListView.View>
         </ListView>
 
-        <Label Content="Municipios:" Margin="20,42,0,92" FontWeight="Bold" HorizontalAlignment="Left" FontFamily="Arial Black"/>
-        <Label Content="al" Margin="10,40,539,94" RenderTransformOrigin="0.588,0.386" Grid.Column="2"/>
-        <TextBox Name="TBCodInitial" HorizontalAlignment="Left" Margin="125,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
-        <TextBox Name="TBCodFinal" HorizontalAlignment="Left" Margin="56,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Grid.Column="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
-        <lvc:PieChart x:Name="pieChart" LegendLocation="Bottom" Hoverable="True" InnerRadius="0" Margin="10" Grid.Column="2"></lvc:PieChart>
+        <Label Content="Municipios:" Margin="20,41,0,0" FontWeight="Bold" HorizontalAlignment="Left" FontFamily="Arial Black" VerticalAlignment="Top"/>
+        <Label Content="al" Margin="10,39,539,0" RenderTransformOrigin="0.588,0.386" Grid.Column="2" VerticalAlignment="Top"/>
+        <TextBox x:Name="TBCodInitial" HorizontalAlignment="Left" Margin="125,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
+        <TextBox x:Name="TBCodFinal" HorizontalAlignment="Left" Margin="56,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Grid.Column="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
+        <lvc:PieChart x:Name="pieChart" Series="{Binding SeriesCollection}" LegendLocation="Bottom" Hoverable="True" InnerRadius="0" Margin="387,129,62,53" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        </lvc:PieChart>
     </Grid>
 </Window>
