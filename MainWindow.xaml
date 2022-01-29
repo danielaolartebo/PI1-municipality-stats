@@ -5,31 +5,42 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:stats_s1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Municipality Stats" Height="450" Width="1130" Background="White">
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="137*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="189*"/>
+            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="407*"/>
+            <ColumnDefinition Width="177*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="4" Grid.RowSpan="2">
             <DockPanel>
-                <Menu DockPanel.Dock="Top">
+                <Menu DockPanel.Dock="Top" Background="#FFC34444">
                     <MenuItem Header="_Data">
                         <MenuItem x:Name="Import" Header="_Import" HorizontalAlignment="Left" Width="120" Click="Import_Click"/>
                     </MenuItem>
                 </Menu>
             </DockPanel>
         </StackPanel>
-        <ListView Margin="10,86,340,10" Name="lvUsers" Width="430" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListView Margin="20,86,333,10" Name="lvUsers" Background="#FFC34444" Grid.ColumnSpan="3" FontWeight="Bold" Grid.RowSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="COD Dpto" Width="60" DisplayMemberBinding="{Binding CodDpto}" />
-                    <GridViewColumn Header="COD Mcpio" Width="70" DisplayMemberBinding="{Binding CodMcpio}" />
-                    <GridViewColumn Header="Departamento" Width="100" DisplayMemberBinding="{Binding NameDpto}" />
+                    <GridViewColumn Header="Código Departamento" Width="130" DisplayMemberBinding="{Binding CodDpto}" />
+                    <GridViewColumn Header="Código Municipio" Width="130" DisplayMemberBinding="{Binding CodMcpio}" />
+                    <GridViewColumn Header="Departamento" Width="90" DisplayMemberBinding="{Binding NameDpto}" />
                     <GridViewColumn Header="Municipio" Width="90" DisplayMemberBinding="{Binding NameMcpio}" />
                     <GridViewColumn Header="Tipo" Width="90" DisplayMemberBinding="{Binding Type}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Content="COD Mcpio Inicial:" Margin="20,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107"/>
-        <TextBox Name="TBCodInitial" TextWrapping="Wrap" Text="" Width="80" Margin="132,44,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="COD Mcpio Final:" Margin="259,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="101"/>
-        <TextBox Name="TBCodFinal" TextWrapping="Wrap" Text="" Width="80" Margin="365,44,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" IsEnabled="False" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox"/>
+
+        <Label Content="Municipios:" Margin="20,42,0,92" FontWeight="Bold" HorizontalAlignment="Left" FontFamily="Arial Black"/>
+        <Label Content="al" Margin="10,40,539,94" RenderTransformOrigin="0.588,0.386" Grid.Column="2"/>
+        <TextBox Name="TBCodInitial" HorizontalAlignment="Left" Margin="125,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="161" Grid.ColumnSpan="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
+        <TextBox Name="TBCodFinal" HorizontalAlignment="Left" Margin="56,44,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="186" Grid.Column="2" TextChanged="TextBox_TextChanged" PreviewTextInput="NumberValidationTextBox" IsEnabled="False"/>
     </Grid>
 </Window>

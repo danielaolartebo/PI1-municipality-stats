@@ -8,14 +8,17 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace stats_s1
 {
     public partial class MainWindow : Window
     {
         public MainWindow() => InitializeComponent();
-        ObservableCollection<Users> Users;
+        ObservableCollection<Users> Users = new ObservableCollection<Users>();
 
+        // Import CSV file
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             var fileDialog = new Microsoft.Win32.OpenFileDialog() { Filter = "CSV Files (*.csv)|*.csv", Title = "Open File" };
@@ -30,8 +33,10 @@ namespace stats_s1
                 TBCodFinal.IsEnabled = true;
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+            // generatePieChart();
         }
 
+        // Read CSV file 
         private void ReadCSV(string fileName)
         {
             string[] lines = File.ReadAllLines(fileName);
@@ -63,16 +68,37 @@ namespace stats_s1
             lvUsers.ClearValue(ItemsControl.ItemsSourceProperty);
             lvUsers.ItemsSource = tempUsers;
         }
-    }
 
+        // Create pie chart
+        /*
+        private void generatePieChart()
+        {
+            SeriesCollection series = new SeriesCollection();
+            foreach (Users types in users.getNameDpto())
+            {
+                series.Add(new PieSeries()
+                {
+                    Title = users.getType(),
+                    Values = new ChartValues<int> { users.getCodDpto().Count },
+                    DataLabels = true,
+                });
+           
+            }
+         
+        }
+        */
+    }
     public class Users
     {
+
+        // Attributes
         public int CodDpto { get; }
         public int CodMcpio { get; }
         public string NameDpto { get; }
         public string NameMcpio { get; }
         public string Type { get; }
 
+        // Methods
         public Users(int codDpto, int codMcpio, string nameDpto, string nameMcpio, string type)
         {
             CodDpto = codDpto;
@@ -83,3 +109,4 @@ namespace stats_s1
         }
     }
 }
+
