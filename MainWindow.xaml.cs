@@ -3,18 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 using LiveCharts;
 using LiveCharts.Wpf;
 
@@ -23,10 +16,9 @@ namespace stats_s1
     public partial class MainWindow : Window
     {
         public MainWindow() => InitializeComponent();
-        private Users users;
+        ObservableCollection<Users> Users = new ObservableCollection<Users>();
 
         // Import CSV file
-
         private void Import_Click(object sender, RoutedEventArgs e)
         {
             var fileDialog = new Microsoft.Win32.OpenFileDialog() { Filter = "CSV Files (*.csv)|*.csv", Title = "Open File" };
@@ -36,32 +28,45 @@ namespace stats_s1
                 MessageBox.Show("Failed to Load Data!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Error);
             } else
             {
-                lvUsers.ItemsSource = ReadCSV(fileDialog.FileName);
+                ReadCSV(fileDialog.FileName);
+                TBCodInitial.IsEnabled = true;
+                TBCodFinal.IsEnabled = true;
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             // generatePieChart();
         }
 
         // Read CSV file 
-
-        private IEnumerable<Users> ReadCSV(string fileName)
+        private void ReadCSV(string fileName)
         {
             string[] lines = File.ReadAllLines(fileName);
-            return lines.Select(line =>
+            IEnumerable<Users> IUsers = lines.Select(line =>
             {
                 string[] data = line.Split(',');
                 return new Users(Convert.ToInt32(data[0]), Convert.ToInt32(data[1]), data[2], data[3], data[4]);
             });
+            Users = new ObservableCollection<Users>(IUsers);
+            lvUsers.ItemsSource = Users;
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-        }
-
-        private void lvUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            ObservableCollection<Users> tempUsers = new ObservableCollection<Users>();
+            int start = (TBCodInitial.Text.Length > 0) ? Convert.ToInt32(TBCodInitial.Text) : 0;
+            int final = (TBCodFinal.Text.Length > 0) ? Convert.ToInt32(TBCodFinal.Text) : int.MaxValue;
+            foreach (Users users in Users)
+            {
+                if (users.CodMcpio >= start && users.CodMcpio <= final)
+                    tempUsers.Add(users);
+            }
+            lvUsers.ClearValue(ItemsControl.ItemsSourceProperty);
+            lvUsers.ItemsSource = tempUsers;
         }
 
         // Create pie chart
@@ -82,24 +87,18 @@ namespace stats_s1
          
         }
         */
-
     }
-
-
-
     public class Users
     {
 
         // Attributes
-
-        public int CodDpto;
-        public int CodMcpio;
-        public string NameDpto;
-        public string NameMcpio;
-        public string Type;
+        public int CodDpto { get; }
+        public int CodMcpio { get; }
+        public string NameDpto { get; }
+        public string NameMcpio { get; }
+        public string Type { get; }
 
         // Methods
-
         public Users(int codDpto, int codMcpio, string nameDpto, string nameMcpio, string type)
         {
             CodDpto = codDpto;
@@ -107,33 +106,6 @@ namespace stats_s1
             NameDpto = nameDpto;
             NameMcpio = nameMcpio;
             Type = type;
-        }
-
-        // Getters and setters
-
-        public int getCodDpto()
-        {
-            return CodDpto;
-        }
-
-        public int getCodMcpio()
-        {
-            return CodMcpio;
-        }
-
-        public string getNameDpto()
-        {
-            return NameDpto;
-        }
-
-        public string getNameMcpio()
-        {
-            return NameMcpio;
-        }
-
-        public string getType()
-        {
-            return Type;
         }
     }
 }
