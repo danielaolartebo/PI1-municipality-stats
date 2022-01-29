@@ -27,5 +27,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <TextBox HorizontalAlignment="Left" Margin="330,44,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
+
