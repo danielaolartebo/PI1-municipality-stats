@@ -22,6 +22,24 @@
 
 *All documentation of this app can be found [here](https://github.com/danielaolartebo/PI1-municipality-stats/tree/master/docs).*
 
+## ***Local Deploy*** 📦
+   
+*To run the script you should follow these steps:*
+
+1️⃣ *Clone or download the proyect*
+
+2️⃣ *Run your command console and go to the root carpet.*
+
+3️⃣ *Execute the following command:*
+
+```bash
+dotnet run
+```
+
+## ***Import Data*** ⚙️
+   
+*To import your data they must be hosted in a .csv file. All the example files that were used for the import tests are [here](https://github.com/danielaolartebo/PI1-municipality-stats/tree/master/data)*
+
 ## ***Authors*** ✒️
 
 <p align="left">
