@@ -31,7 +31,7 @@ namespace stats_s1
         }
 
         // Import CSV file
-        private void import_Click(object sender, RoutedEventArgs e)
+        private void Import_Click(object sender, RoutedEventArgs e)
         {
             var fileDialog = new Microsoft.Win32.OpenFileDialog() { Filter = "CSV Files (*.csv)|*.csv", Title = "Open File" };
             var result = fileDialog.ShowDialog();
@@ -41,22 +41,22 @@ namespace stats_s1
             }
             else
             {
-                readCSV(fileDialog.FileName);
+                ReadCSV(fileDialog.FileName);
                 TBCodInitial.IsEnabled = true;
                 TBCodFinal.IsEnabled = true;
-                generatePieChart(Mun);
+                GeneratePieChart(Mun);
                 MessageBox.Show("Data Loaded!", "Import Data", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         // Read CSV file 
-        private void readCSV(string fileName)
+        private void ReadCSV(string fileName)
         {
             string[] lines = File.ReadAllLines(fileName);
             IEnumerable<DANE> IUsers = lines.Select(line =>
             {
                 string[] data = line.Split(',');
-                addType(Mun, data[4]);
+                AddType(Mun, data[4]);
                 return new DANE(Convert.ToInt32(data[0]), Convert.ToInt32(data[1]), data[2], data[3], data[4]);
             });
             Users = new ObservableCollection<DANE>(IUsers);
@@ -64,7 +64,7 @@ namespace stats_s1
         }
 
         //Add type of municipality
-        private void addType(List<Municipality> mun, string type)
+        private void AddType(List<Municipality> mun, string type)
         {
             for (int i = 0; i < mun.Count; i++)
             {
@@ -78,14 +78,14 @@ namespace stats_s1
         }
 
         //Validatiton
-        private void numberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         // Selection of 2 municipalities 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             ObservableCollection<DANE> tempUsers = new ObservableCollection<DANE>();
             List<Municipality> tempMun = new List<Municipality>();
@@ -96,17 +96,17 @@ namespace stats_s1
                 if (users.CodMcpio >= start && users.CodMcpio <= final)
                 {
                     tempUsers.Add(users);
-                    addType(tempMun, users.Type);
+                    AddType(tempMun, users.Type);
                 }
             }
             lvUsers.ClearValue(ItemsControl.ItemsSourceProperty);
             lvUsers.ItemsSource = tempUsers;
             pieChart.Series.Clear();
-            generatePieChart(tempMun);
+            GeneratePieChart(tempMun);
         }
 
         // Create pie chart
-        private void generatePieChart(List<Municipality> municipalities)
+        private void GeneratePieChart(List<Municipality> municipalities)
         {
             series = new SeriesCollection();
             foreach (Municipality mun in municipalities)
